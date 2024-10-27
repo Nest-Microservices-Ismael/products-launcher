@@ -5,6 +5,7 @@ services:
     image: nats:latest
     ports:
       - "8222:8222"
+
   client-gateway:
     build: ./client-gateway
     ports:
@@ -12,35 +13,32 @@ services:
     volumes:
       - ./client-gateway/src:/usr/src/app/src
     command: npm run start:dev
-    enviroment:
+    environment:
       - PORT=3000
       - NATS_SERVERS=nats://nats-server:4222
-  
+
   product-ms:
     build: ./products-ms
     volumes:
       - ./products-ms/src:/usr/src/app/src
     command: npm run start:dev
-    enviroment:
+    environment:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=file:./dev.db
 
-  # Orders-ms
   orders-ms:
-    depends-on:
+    depends_on:
       - orders-db
     build: ./orders-ms
     volumes:
       - ./orders-ms/src:/usr/src/app/src
     command: npm run start:dev
-    enviroment:
-     - name
-     - PORT=3002
-     - DATABASE_URL=postgresql://postgres:postgres@orders-db:5432/ordersdb?schema=public
-     - NATS_SERVERS=nats://nats-server:4222
-  
-  #Orders-db:
+    environment:
+      - PORT=3002
+      - DATABASE_URL=postgresql://postgres:postgres@orders-db:5432/ordersdb?schema=public
+      - NATS_SERVERS=nats://nats-server:4222
+
   orders-db:
     container_name: orders-database
     image: postgres:16.2
