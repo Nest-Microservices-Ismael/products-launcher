@@ -35,3 +35,8 @@ Si se trabaja en el repositorio que tiene los sub-módulos, **primero actualizar
 
 Si se hace al revés, se perderán las referencias de los sub-módulos en el repositorio principal y tendremos que resolver conflictos.
 
+
+## Pasos
+1. Si actualizamos algo del submodule primero vamos al submodule a hacer el commit de preferencia desde el source control, commit and push
+
+2. Luego subimos la referencia del client-gateway o el submodule actualizado y hacemos push en el launcher
